@@ -1,8 +1,13 @@
 import { WebGLRenderer, sRGBEncoding, PCFSoftShadowMap } from "three"
-export default function createRenderer(WIDTH: number, HEIGHT: number): WebGLRenderer {
-  const renderer = new WebGLRenderer({ antialias: false })
+export default function createRenderer(
+  WIDTH: number,
+  HEIGHT: number,
+  ADJUST_PIXEL_RATIO: number,
+  ANTIALIAS: boolean,
+): WebGLRenderer {
+  const renderer = new WebGLRenderer({ antialias: ANTIALIAS })
   renderer.setSize(WIDTH, HEIGHT)
-  renderer.setPixelRatio(window.devicePixelRatio * 0.8)
+  renderer.setPixelRatio(window.devicePixelRatio * ADJUST_PIXEL_RATIO)
   renderer.physicallyCorrectLights = true
   renderer.outputEncoding = sRGBEncoding
   renderer.shadowMap.enabled = true

@@ -10,6 +10,19 @@ import createLight from "./utils/lights"
 import { playersPosition, playersAnimation } from "./utils/players"
 import createAudio from "./utils/audio"
 
+let mediaW = window.matchMedia("(max-width: 760px)")
+let mediaH = window.matchMedia("(max-height: 760px)")
+
+let ADJUST_PIXEL_RATIO = 1
+let ANTIALIAS = true
+let PLAYERS_COUNT = 6
+
+if (mediaW.matches || mediaH.matches) {
+  ADJUST_PIXEL_RATIO = 0.8
+  ANTIALIAS = false
+  PLAYERS_COUNT = 5
+}
+
 const startButton = document.getElementById("startButton")
 if (startButton) startButton.addEventListener("click", main)
 
@@ -24,7 +37,7 @@ const player = new URL("./assets/player.glb", import.meta.url)
 const sound = new URL("./assets/rangers-goal-song.mp3", import.meta.url)
 
 //create objects --------------------------------------------------------
-const renderer = createRenderer(WIDTH, HEIGHT)
+const renderer = createRenderer(WIDTH, HEIGHT, ADJUST_PIXEL_RATIO, ANTIALIAS)
 const camera = createCamera(WIDTH, HEIGHT, { x: -10, y: 10, z: 20 })
 const controls = new OrbitControls(camera, renderer.domElement)
 const scene = new Scene()
@@ -48,7 +61,7 @@ async function main(): Promise<void> {
   const playerModel = await loadModel(player.toString(), "castShadow")
   const { listener, audio } = await createAudio(sound.toString())
   if (playerModel) {
-    const { group, team } = playersPosition(playerModel, 5, "circle", { x: 0, z: 0, r: 5 })
+    const { group, team } = playersPosition(playerModel, PLAYERS_COUNT, "circle", { x: 0, z: 0, r: 5 })
     scene.add(group)
     const mixer = playersAnimation(playerModel, team)
     const clock = new Clock()
