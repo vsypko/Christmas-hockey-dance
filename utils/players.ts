@@ -1,7 +1,8 @@
 import { AnimationObjectGroup, AnimationMixer, Group } from "three"
+import { GLTF } from "three/examples/jsm/loaders/GLTFLoader"
 import * as SkeletonUtils from "three/examples/jsm/utils/SkeletonUtils"
 
-export function playersPosition(model: any, count: number, figure: string, pos: { x: number; z: number; r: number }) {
+export function playersPosition(model: GLTF, count: number, figure: string, pos: { x: number; z: number; r: number }) {
   const group = new Group()
   const team = new AnimationObjectGroup()
 
@@ -20,7 +21,7 @@ export function playersPosition(model: any, count: number, figure: string, pos: 
   return { group, team }
 }
 
-export function playersAnimation(model: any, group: AnimationObjectGroup): AnimationMixer {
+export function playersAnimation(model: GLTF, group: AnimationObjectGroup): AnimationMixer {
   const mixer = new AnimationMixer(group)
   const action = mixer.clipAction(model.animations[0], group)
   action.play()

@@ -5,8 +5,7 @@ export default async function createAudio(url: string) {
 
   const audio = new Audio(listener)
   const audioLoader = new AudioLoader()
-  const uri = new URL(url, import.meta.url)
-  const buffer = await audioLoader.loadAsync(uri.toString())
+  const buffer = await audioLoader.loadAsync(url)
   audio.setBuffer(buffer)
   audio.setLoop(true)
   audio.setVolume(0.2)
