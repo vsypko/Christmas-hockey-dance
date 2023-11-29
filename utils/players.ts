@@ -11,6 +11,7 @@ export function playersPosition(model: GLTF, count: number, figure: string, pos:
     if (figure === "circle") {
       let x = pos.r * Math.cos((i * 2 * Math.PI) / count) + pos.x
       let z = pos.r * Math.sin((i * 2 * Math.PI) / count) + pos.z
+
       dancer.position.set(x, 0, z)
     }
     //group for addition to the scene
